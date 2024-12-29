@@ -1,50 +1,56 @@
-public class User {
-    private String username;
-    private int age;
+import java.util.ArrayList;
+import java.util.List;
+
+public class User extends Person {
     private double weight;
-    private WorkoutRoutine workoutRoutine;
+    private List<WorkoutRoutine> workouts;
 
-    public User(String username, int age, double weight) {
-        this.username = username;
-        this.age = age;
+    public User(String name, int age, double weight) {
+        super(name, age);
         this.weight = weight;
+        this.workouts = new ArrayList<>();
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
+    public double getWeight() { return weight; }
     public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    public void addWorkout(WorkoutRoutine workoutRoutine) {
-        this.workoutRoutine = workoutRoutine;
-    }
-
-    public void displayUserDetails() {
-        System.out.println("Username: " + username);
-        System.out.println("Age: " + age + ", Weight: " + weight + " kg");
-        if (workoutRoutine != null) {
-            workoutRoutine.displayWorkoutDetails();
+        if (weight > 0) {
+            this.weight = weight;
         } else {
-            System.out.println("No workout routine assigned.");
+            System.out.println("Weight must be positive!");
         }
+    }
+    public List<WorkoutRoutine> getWorkouts() { return workouts; }
+    public void addWorkout(WorkoutRoutine workout) { this.workouts.add(workout); }
+
+    public void sortWorkoutsByDuration() {
+        workouts.sort((w1, w2) -> Integer.compare(w1.getDuration(), w2.getDuration()));
+    }
+
+    public List<WorkoutRoutine> filterWorkoutsByDuration(int minDuration) {
+        List<WorkoutRoutine> filtered = new ArrayList<>();
+        for (WorkoutRoutine workout : workouts) {
+            if (workout.getDuration() >= minDuration) {
+                filtered.add(workout);
+            }
+        }
+        return filtered;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Weight: " + weight + ", Workouts: " + workouts;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        User user = (User) obj;
+        return Double.compare(user.weight, weight) == 0 && super.equals(user);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() + 31 * Double.hashCode(weight);
     }
 }

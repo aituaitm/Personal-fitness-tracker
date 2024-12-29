@@ -1,38 +1,41 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class FitnessApp {
-    private ArrayList<User> userList;
+    private List<User> users;
 
     public FitnessApp() {
-        userList = new ArrayList<>();
+        this.users = new ArrayList<>();
     }
 
-    public void addUser(User user) {
-        userList.add(user);
+    public void addUser(User user) { users.add(user); }
+
+    public User searchUserByName(String name) {
+        for (User user : users) {
+            if (user.getName().equalsIgnoreCase(name)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public List<User> filterUsersByWeight(double minWeight) {
+        List<User> filtered = new ArrayList<>();
+        for (User user : users) {
+            if (user.getWeight() >= minWeight) {
+                filtered.add(user);
+            }
+        }
+        return filtered;
+    }
+
+    public void sortUsersByAge() {
+        users.sort((u1, u2) -> Integer.compare(u1.getAge(), u2.getAge()));
     }
 
     public void displayAllUsers() {
-        for (User user : userList) {
-            user.displayUserDetails();
-            System.out.println();
+        for (User user : users) {
+            System.out.println(user);
         }
     }
-
-    public static void main(String[] args) {
-        WorkoutRoutine routine1 = new WorkoutRoutine("Push-ups", 15, 3, 20);
-        WorkoutRoutine routine2 = new WorkoutRoutine("Squats", 20, 4, 15);
-
-        User user1 = new User("Alice", 25, 65.5);
-        User user2 = new User("Bob", 30, 80.0);
-
-        user1.addWorkout(routine1);
-        user2.addWorkout(routine2);
-
-        FitnessApp app = new FitnessApp();
-        app.addUser(user1);
-        app.addUser(user2);
-
-        app.displayAllUsers();
-    }
 }
-

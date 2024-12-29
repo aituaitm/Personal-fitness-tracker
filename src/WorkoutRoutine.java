@@ -1,6 +1,6 @@
 public class WorkoutRoutine {
     private String exerciseName;
-    private int duration;
+    private int duration; // in minutes
     private int sets;
     private int repetitions;
 
@@ -11,41 +11,31 @@ public class WorkoutRoutine {
         this.repetitions = repetitions;
     }
 
-    public String getExerciseName() {
-        return exerciseName;
+    public String getExerciseName() { return exerciseName; }
+    public void setExerciseName(String exerciseName) { this.exerciseName = exerciseName; }
+    public int getDuration() { return duration; }
+    public void setDuration(int duration) { this.duration = duration; }
+    public int getSets() { return sets; }
+    public void setSets(int sets) { this.sets = sets; }
+    public int getRepetitions() { return repetitions; }
+    public void setRepetitions(int repetitions) { this.repetitions = repetitions; }
+
+    @Override
+    public String toString() {
+        return "Workout: " + exerciseName + " (" + sets + " sets, " + repetitions + " reps, " + duration + " mins)";
     }
 
-    public void setExerciseName(String exerciseName) {
-        this.exerciseName = exerciseName;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        WorkoutRoutine that = (WorkoutRoutine) obj;
+        return duration == that.duration && sets == that.sets && repetitions == that.repetitions &&
+                exerciseName.equals(that.exerciseName);
     }
 
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public int getSets() {
-        return sets;
-    }
-
-    public void setSets(int sets) {
-        this.sets = sets;
-    }
-
-    public int getRepetitions() {
-        return repetitions;
-    }
-
-    public void setRepetitions(int repetitions) {
-        this.repetitions = repetitions;
-    }
-
-    public void displayWorkoutDetails() {
-        System.out.println("Exercise: " + exerciseName);
-        System.out.println("Duration: " + duration + " minutes");
-        System.out.println("Sets: " + sets + ", Repetitions per set: " + repetitions);
+    @Override
+    public int hashCode() {
+        return exerciseName.hashCode() + 31 * duration + 31 * sets + 31 * repetitions;
     }
 }
