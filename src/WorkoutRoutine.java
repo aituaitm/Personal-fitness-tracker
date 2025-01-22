@@ -10,7 +10,6 @@ public class WorkoutRoutine {
         this.sets = sets;
         this.repetitions = repetitions;
     }
-
     public String getExerciseName() { return exerciseName; }
     public void setExerciseName(String exerciseName) { this.exerciseName = exerciseName; }
     public int getDuration() { return duration; }
